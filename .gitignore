@@ -1,6 +1,8 @@
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
 *.a
+*.swp
+*.swo
 *.so
 
 # Folders
@@ -22,3 +24,5 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+Gotex
