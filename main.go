@@ -18,23 +18,17 @@ type Session struct {
 	LoginSession *geddit.LoginSession
 }
 
+var s *Session
+
 func main() {
-	s := InitSession()
+	s = InitSession()
 
 	s.frontpage(s.Limit, "")
 	var c string
 	fmt.Print(":")
 	fmt.Scanf("%s", &c)
 	for c != "q" {
-		if c == "n" {
-			s.frontpage(s.Limit, s.Last)
-		}
-		if c == "login" {
-			s.Login()
-		}
-		if c == "logout" {
-			s.Logout()
-		}
+		DoInput(c)
 		fmt.Print(":")
 		fmt.Scanf("%s", &c)
 	}
