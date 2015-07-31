@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/rthornton128/goncurses"
 
 	"code.google.com/p/gopass"
@@ -38,14 +37,21 @@ func (ui *NcurseUi) KillScreen() {
 
 func (ui *NcurseUi) PrintSubmissions(submissions []*geddit.Submission) {
 	for i, sub := range submissions {
-		fmt.Printf("%d: Title: %s\nAuthor: %s, Subreddit: %s\nVotes: %d\n\n", i, sub.Title, sub.Author, sub.Subreddit, sub.Score)
+		ui.Contents.Printf("%d: Title: %s\nAuthor: %s, Subreddit: %s\nVotes: %d\n\n", i, sub.Title, sub.Author, sub.Subreddit, sub.Score)
 		s.Last = sub.FullID
 	}
+	ui.Contents.Refresh()
 }
 
 func (ui *NcurseUi) CommandlineReadline(prompt string) (output string) {
-	fmt.Print(prompt)
-	fmt.Scanf("%s", &output)
+	ui.CommandLine.Erase()
+	ui.CommandLine.Refresh()
+	ui.CommandLine.Print(prompt)
+
+	output, err := ui.CommandLine.GetString(300)
+	HandleErr(err)
+	ui.CommandLine.Refresh()
+
 	return
 }
 

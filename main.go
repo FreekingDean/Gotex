@@ -13,7 +13,7 @@ var ui Ui
 
 func main() {
 	var interfaceFlag string
-	flag.StringVar(&interfaceFlag, "-interface", "ncurse", "Use ncurses over std out")
+	flag.StringVar(&interfaceFlag, "interface", "ncurse", "Use ncurses over std out [basic,ncurse]")
 	flag.Parse()
 
 	s = InitSession()
@@ -25,6 +25,7 @@ func main() {
 		c = ui.CommandlineReadline(":")
 		DoInput(c)
 	}
+	ui.KillScreen()
 }
 
 func HandleErr(err error) {
