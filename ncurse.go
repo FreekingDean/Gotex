@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/rthornton128/goncurses"
 
-	"code.google.com/p/gopass"
 	"github.com/jzelinskie/geddit"
 )
 
@@ -56,7 +55,9 @@ func (ui *NcurseUi) CommandlineReadline(prompt string) (output string) {
 }
 
 func (ui *NcurseUi) CommandlineSecretInput(prompt string) (output string) {
-	output, _ = gopass.GetPass(prompt)
+	goncurses.Echo(false)
+	output = ui.CommandlineReadline(prompt)
+	goncurses.Echo(true)
 
 	return
 }
