@@ -7,32 +7,49 @@ import (
 	"github.com/jzelinskie/geddit"
 )
 
-type Ui struct {
-	TakeTheH int
+type Ui interface {
+	PrintSubmissions([]*geddit.Submission)
+	KillScreen()
+	CommandlineReadline(string) string
+	CommandlineSecretInput(string) string
 }
 
-func InitUi() (ui *Ui) {
-	ui = &Ui{
-		TakeTheH: 1,
+type BasicUi struct{}
+
+func InitUi(intFaceType string) (ui Ui) {
+	if intFaceType == "ncurse" {
+		ui = InitNcurseUi()
+	} else {
+		ui = InitBasicUi()
 	}
 
 	return
 }
 
-func (ui *Ui) PrintSubmissions(submissions []*geddit.Submission) {
+func InitBasicUi() (ui *BasicUi) {
+	ui = &BasicUi{}
+
+	return
+}
+
+func (ui *BasicUi) PrintSubmissions(submissions []*geddit.Submission) {
 	for i, sub := range submissions {
 		fmt.Printf("%d: Title: %s\nAuthor: %s, Subreddit: %s\nVotes: %d\n\n", i, sub.Title, sub.Author, sub.Subreddit, sub.Score)
 		s.Last = sub.FullID
 	}
 }
 
-func (ui *Ui) CommandlineReadline(prompt string) (output string) {
+func (ui *BasicUi) KillScreen() {
+	fmt.Println("Done.")
+}
+
+func (ui *BasicUi) CommandlineReadline(prompt string) (output string) {
 	fmt.Print(prompt)
 	fmt.Scanf("%s", &output)
 	return
 }
 
-func (ui *Ui) CommandlineSecretInput(prompt string) (output string) {
+func (ui *BasicUi) CommandlineSecretInput(prompt string) (output string) {
 	output, _ = gopass.GetPass(prompt)
 
 	return
