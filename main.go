@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+
+	uipkg "./ui"
 )
 
 const (
@@ -9,7 +11,7 @@ const (
 )
 
 var s *Session
-var ui Ui
+var ui uipkg.Ui
 
 func main() {
 	var interfaceFlag string
@@ -17,18 +19,19 @@ func main() {
 	flag.Parse()
 
 	s = InitSession()
-	ui = InitUi(interfaceFlag)
+	ui = uipkg.InitUi(interfaceFlag)
 
 	s.Frontpage(s.Limit, "")
-	c := ""
-	for c != "q" {
-		c = ui.CommandlineReadline(":")
+	var c int
+	for c != 'q' {
+		c = ui.GetCommand()
 		DoInput(c)
 	}
 	ui.KillScreen()
 }
 
 func HandleErr(err error) {
+	//ui.KillScreen()
 	if err != nil {
 		panic(err)
 	}

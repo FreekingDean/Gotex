@@ -1,12 +1,14 @@
 package main
 
-func DoInput(input string) {
+func DoInput(input int) {
 	switch input {
-	case "n":
+	case 'n':
 		s.Frontpage(s.Limit, s.Last)
-	case "login":
+	case 'l':
 		s.Login()
-	case "logout":
+	case 'o':
 		s.Logout()
+	default:
+		ui.Handle(input)
 	}
 }

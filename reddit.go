@@ -23,8 +23,8 @@ func InitSession() (s *Session) {
 	return
 }
 func (s *Session) Login() {
-	username := ui.CommandlineReadline("username: ")
-	password := ui.CommandlineSecretInput("password: ")
+	username := ui.GetString("username: ")
+	password := ui.GetSecret("password: ")
 
 	sesh, err := geddit.NewLoginSession(username, password, USER_AGENT)
 	if err != nil {
@@ -62,5 +62,5 @@ func (s *Session) Frontpage(limit int, last string) {
 		submissions, _ = s.Session.DefaultFrontpage(geddit.DefaultPopularity, subOpts)
 	}
 
-	ui.PrintSubmissions(submissions)
+	s.Last = ui.PrintSubmissions(submissions)
 }
