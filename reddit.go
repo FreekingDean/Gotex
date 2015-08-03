@@ -17,7 +17,7 @@ func InitSession() (s *Session) {
 	s = &Session{
 		Type:    "std",
 		Last:    "",
-		Limit:   10,
+		Limit:   16,
 		Session: geddit.NewSession(USER_AGENT),
 	}
 	return
